@@ -21,14 +21,32 @@ public class Analyser {
 	private static void analyserRegistro (Matcher RegistroPlayer, Map<String, Player> players) {
 		String player = RegistroPlayer.group(3).trim();
 		String playerID = null;
-		System.out.println(player);
+		String playerName = null;
+		//DEBUG
+		//System.out.println(player);
 		if (player.length() > 0) {
 			playerID = player.substring(0, 1);
-			//Debug
-			//System.out.println(playerID);
+			int nameStart = player.indexOf("n\\");
+			int nameEnd = player.indexOf("\\t\\");
+			if (nameStart == 0 || nameEnd == 0) {
+				playerName = "";
+			}
+			else {
+				playerName = player.substring(nameStart + 2, nameEnd);
+				//DEBUG
+				//System.out.println(playerName);
+			}
 		}
 		else {
 			playerID = "";
+			playerName = "";
+		}
+		
+		if (players.containsKey(playerID)) {
+			
+		}
+		else {
+			players.put(playerID, new Player(playerID, playerName, new PlayerKD()));
 		}
 	}
 	

@@ -19,9 +19,19 @@ public class Parser {
 		if (arquivoExiste) {
 			try {
 				linhas = Files.readAllLines(Paths.get(diretorio));
-				System.out.println(linhas.size());
+				//DEBUG
+				//System.out.println(linhas.size());
 				ParserGame game = new ParserGame(linhas);
-				game.parserGames();
+				List<Game> games = game.parserGames();
+				
+				//DEBUG
+				for (Game g: games) {
+					System.out.println(g.getNome());
+					List<Player> players = g.getPlayers();
+					for (Player p : players) {
+						System.out.println(p.getNome());
+					}
+				}
 			}
 			catch (IOException e) {
 				System.out.println("Erro");
