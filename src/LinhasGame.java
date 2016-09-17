@@ -1,11 +1,11 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class AnalyserGame {
+public class LinhasGame {
 	private String nome;
 	private List<String> linhas;
 	
-	public AnalyserGame () {
+	public LinhasGame () {
 		this.linhas = new ArrayList<> ();
 	}
 	

@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ParserGame {
 	private List<String> linhas;
@@ -9,27 +11,29 @@ public class ParserGame {
 	}
 	
 	public List<Game> parserGames() {
-		List<AnalyserGame> analyserGame = parserLinesAnalyser();
+		List<LinhasGame> linhasGame = parserLines();
 		List<Game> games = new ArrayList<>();
 		
-		for (AnalyserGame analyser : analyserGame) {
-			//games.add(parserAnalyser(analyser));
+		for (LinhasGame linhaGame : linhasGame) {
+			//DEBUG
+			System.out.println(linhaGame.getNome());
+			games.add(parserLinhasGame(linhaGame));
 		}
 		return games;
 	}
 	
-	private List<AnalyserGame> parserLinesAnalyser() {
-		List<AnalyserGame> games = new ArrayList<>();
+	private List<LinhasGame> parserLines() {
+		List<LinhasGame> games = new ArrayList<>();
 		int TotaldePartidas = 0;
 		String UltimaLinha = linhas.get(linhas.size() - 1);
-		AnalyserGame game = new AnalyserGame();
+		LinhasGame game = new LinhasGame();
 		
 		for (String linha : linhas) {
 			boolean InitGame = Regex.EstaPresente(linha.trim(), "InitGame");
 			if (InitGame) {
 				if (TotaldePartidas > 0) {
 					games.add(game);
-					game = new AnalyserGame ();
+					game = new LinhasGame ();
 				}
 				System.out.println(linha);//Debug 
 				TotaldePartidas++;
@@ -44,6 +48,15 @@ public class ParserGame {
 			}
 		}
 		return games;
+	}
+	
+	private Game parserLinhasGame (LinhasGame game) {
+		List<String> linhas = game.getLinhas();
+		String nome = game.getNome();
+		Map<String, Player> mapPlayers = new HashMap<>();
+		Analyser.analyser(linhas, mapPlayers); 
+		List<Player> players = new ArrayList<>(mapPlayers.values());
+		return new Game(nome, players);
 	}
 	
 }
