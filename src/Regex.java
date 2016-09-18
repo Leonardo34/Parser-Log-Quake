@@ -13,4 +13,8 @@ public class Regex {
 	public static Matcher getMatcherForSentence(final String sentence, final String value) {
 		return createPatternToValue(value).matcher(sentence);
 	}
+	
+	public static Matcher createPatternForSetence(final String pattern, final String sentence) {
+		return Pattern.compile(pattern).matcher(sentence);
+	}
 }

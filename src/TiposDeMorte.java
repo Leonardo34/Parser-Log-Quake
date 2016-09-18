@@ -37,7 +37,7 @@ public enum TiposDeMorte {
 		return this.id;
 	}
 
-	public static TiposDeMorte getByValue(final int value) {
+	public static TiposDeMorte getType(final int value) {
 		for (final TiposDeMorte deathType : values()) {
 			if (Integer.compare(value, deathType.getId()) == 0) {
 				return deathType;

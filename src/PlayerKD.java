@@ -52,7 +52,7 @@ public class PlayerKD {
 	}
 	
 	public void killWorld () {
-		TotalKills--;
+		KillsValidas--;
 	}
 	
 	public Map<TiposDeMorte, Integer> getTiposDeMorte () {

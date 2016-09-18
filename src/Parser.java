@@ -29,7 +29,7 @@ public class Parser {
 					System.out.println(g.getNome());
 					List<Player> players = g.getPlayers();
 					for (Player p : players) {
-						System.out.println(p.getNome());
+						System.out.println(p.getNome() + " " + p.getPlayerKD().getKillsValidas());						
 					}
 				}
 			}
