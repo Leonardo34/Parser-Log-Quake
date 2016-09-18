@@ -1,8 +1,14 @@
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Scanner;
+import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.toList;
 
 public class Parser {
 	public static void main (String[] args) throws Exception {
@@ -23,15 +29,7 @@ public class Parser {
 				//System.out.println(linhas.size());
 				ParserGame game = new ParserGame(linhas);
 				List<Game> games = game.parserGames();
-				
-				//DEBUG
-				for (Game g: games) {
-					System.out.println(g.getNome());
-					List<Player> players = g.getPlayers();
-					for (Player p : players) {
-						System.out.println(p.getNome() + " " + p.getPlayerKD().getKillsValidas());						
-					}
-				}
+				printGames(games);
 			}
 			catch (IOException e) {
 				System.out.println("Erro");
@@ -41,6 +39,42 @@ public class Parser {
 		else {
 			//Se o arquivo não existe, informa o usuario que o diretorio esta incorreto 
 			System.out.println ("Diretorio Incorreto");
+		}
+	}
+	
+	public static void printGames (List <Game> games) {
+		
+		//Ranking de todas partidas do servidor
+		System.out.println("Ranking: {");
+		Map<String, Integer> totalKillsPlayer = new HashMap<>();
+		List<Player> players = new ArrayList<>();
+		for (Game game : games) {
+			for (Player p : game.getPlayers()) {
+				players.add(p);
+			}
+		}
+		
+		for (Player p : players) {
+			String nome = p.getNome();
+			Integer killsGame = p.getPlayerKD().getKillsValidas();
+			if (!totalKillsPlayer.containsKey(nome)) {
+				totalKillsPlayer.put(nome, 0);
+			}
+			totalKillsPlayer.put(nome, totalKillsPlayer.get(nome) + killsGame);
+		}
+		
+		for (Entry<String, Integer> Player : totalKillsPlayer.entrySet()) {
+			System.out.println(" " + Player.getKey() + ": " + Player.getValue());
+		}
+		System.out.println("}");
+		System.out.println("");
+		
+		//Ranking por partidas
+		for (Game game : games) {
+			System.out.println(game.getNome() + " {");
+			for (Player player : game.getPlayers()) {
+				System.out.println(player.getNome() + " " + player.getPlayerKD().getKillsValidas());
+			}
 		}
 	}
 }
