@@ -3,6 +3,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -92,8 +93,33 @@ public class Parser {
 				System.out.println(player.getNome() + " : " + player.getPlayerKD().getKillsValidas());
 			}
 			System.out.println("  }");
+			
+			// Se a opcao escolhida no menu for sim, printa tipos de morte de cada partida
 			if (opcao == 1) {
+				Map<TiposDeMorte, Integer> tiposDeMorte = new HashMap<>();
 				
+				for (Player player : game.getPlayers()) {
+					Map<TiposDeMorte, Integer> tiposDeMortePlayer = player.getPlayerKD().getTiposDeMorte();
+					
+					for (Entry <TiposDeMorte, Integer> entry : tiposDeMortePlayer.entrySet()) {
+						TiposDeMorte tipoDeMorte = entry.getKey();
+						Integer Total = entry.getValue();
+						
+						if (!tiposDeMorte.containsKey(tipoDeMorte)) {
+							tiposDeMorte.put(tipoDeMorte, 0);
+						}
+						tiposDeMorte.put(tipoDeMorte, tiposDeMorte.get(tipoDeMorte) + Total);
+					}	
+				}
+				Iterator<Entry<TiposDeMorte, Integer>> iteratorTiposDeMorte = tiposDeMorte.entrySet().iterator();
+				System.out.println("kills_by_means: {");
+				while (iteratorTiposDeMorte.hasNext()) {
+					Entry<TiposDeMorte, Integer> totalTipoDeMorte = iteratorTiposDeMorte.next();
+					TiposDeMorte tipoDeMorte = totalTipoDeMorte.getKey();
+					Integer total = totalTipoDeMorte.getValue();
+					System.out.println(tipoDeMorte + ": " + total);
+				}
+				System.out.println("  }");
 			}
 			System.out.println("}");
 		}
