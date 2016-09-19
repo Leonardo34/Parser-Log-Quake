@@ -15,8 +15,6 @@ public class ParserGame {
 		List<Game> games = new ArrayList<>();
 		
 		for (LinhasGame linhaGame : linhasGame) {
-			//DEBUG
-			//System.out.println(linhaGame.getNome());
 			games.add(parserLinhasGame(linhaGame));
 		}
 		return games;
@@ -35,7 +33,6 @@ public class ParserGame {
 					games.add(game);
 					game = new LinhasGame ();
 				}
-				//System.out.println(linha);//Debug 
 				TotaldePartidas++;
 				game.setNome("game: "+ TotaldePartidas);
 			}
@@ -56,10 +53,7 @@ public class ParserGame {
 		Map<String, Player> mapPlayers = new HashMap<>();
 		Analyser.analyser(linhas, mapPlayers); 
 		List<Player> players = new ArrayList<>(mapPlayers.values());
-		//DEBUG
-		//for (Player p : players) {
-			//System.out.println(p.getNome());
-		//}
+		
 		return new Game(nome, players);
 	}	
 }

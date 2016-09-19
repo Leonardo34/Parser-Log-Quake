@@ -15,6 +15,10 @@ public class Parser {
 	public static void main (String[] args) throws Exception {
 		List<String> linhas; // Strings contendo cada linha do arquivo de LOG
 		int opcao;
+		
+		System.out.println("PARSER QUAKE LOG");
+		System.out.println("Autor: Leonardo Broch de Morais");
+		System.out.println("Contato: leo_broch@hotmail.com");
 		//Solicita Entrada do diretorio onde se encontra o LOG
 		System.out.println("Digite o diretorio do Log: ");
 		final String diretorio = new Scanner (System.in).next();
@@ -30,8 +34,7 @@ public class Parser {
 		if (arquivoExiste) {
 			try {
 				linhas = Files.readAllLines(Paths.get(diretorio));
-				//DEBUG
-				//System.out.println(linhas.size());
+				
 				ParserGame game = new ParserGame(linhas);
 				List<Game> games = game.parserGames();
 				printGames(games, opcao);

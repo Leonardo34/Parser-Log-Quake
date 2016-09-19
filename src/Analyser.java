@@ -8,12 +8,10 @@ public class Analyser {
 			Matcher RegistroPlayer = Regex.getMatcherForSentence(linha, "ClientUserinfoChanged");
 			if (RegistroPlayer.matches()) {
 				analyserRegistro(RegistroPlayer, players);
-				//return;
 			}
 			Matcher Kill = Regex.getMatcherForSentence(linha, "Kill");
 			if (Kill.matches()) {
 				analyserKill(Kill, players);
-				//return;
 			}
 		}
 	}
@@ -22,8 +20,7 @@ public class Analyser {
 		String player = RegistroPlayer.group(3).trim();
 		String playerID = null;
 		String playerName = null;
-		//DEBUG
-		//System.out.println(player);
+		
 		if (player.length() > 0) {
 			playerID = player.substring(0, 1);
 			int nameStart = player.indexOf("n\\");
@@ -34,10 +31,9 @@ public class Analyser {
 			}
 			else {
 				playerName = player.substring(nameStart + 2, nameEnd);
-				//DEBUG
-				//System.out.println(playerName);
 			}
 		}
+		
 		else {
 			playerID = "";
 			playerName = "";
@@ -67,10 +63,6 @@ public class Analyser {
 		String idKiller = matcherKD.group(1);
 		String idKilled = matcherKD.group(2);
 		String type = matcherKD.group(3);
-		//DEBUG
-		//System.out.println(idKiller);
-		//System.out.println(idKilled);
-		//System.out.println(type);
 		
 		if (!idKiller.equals(idKilled)) {
 			Player killer = players.get(idKiller);
@@ -93,4 +85,5 @@ public class Analyser {
 			}
 		}
 	}
+	
 }
